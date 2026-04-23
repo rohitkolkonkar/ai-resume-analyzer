@@ -17,10 +17,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ── App Config ──────────────────────────────────────────────────────────────
-app = Flask(__name__, static_folder="static", static_url_path="")
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+app = Flask(__name__, static_folder=static_dir, static_url_path="")
 CORS(app)
 
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "uploads")
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
