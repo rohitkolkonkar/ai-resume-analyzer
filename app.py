@@ -51,7 +51,7 @@ def extract_text_from_pdf(filepath: str) -> str:
 
 # ── AI Analysis ─────────────────────────────────────────────────────────────
 
-ANALYSIS_PROMPT = """You are an expert resume reviewer and career coach. Analyze the following resume against the provided job description.
+ANALYSIS_PROMPT = """You are a highly critical, strictly analytical expert resume reviewer and technical recruiter. You must rigorously evaluate the following resume against the provided job description. DO NOT give generic high scores. Most resumes should score between 40 and 75 unless they are an absolutely perfect match. Penalize heavily for missing keywords, lack of quantified metrics, and weak action verbs.
 
 RESUME TEXT:
 \"\"\"
@@ -137,7 +137,7 @@ def call_ai(prompt: str) -> str:
     response = groq_client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.3,
+        temperature=0.5,
         max_tokens=4096,
     )
     return response.choices[0].message.content.strip()
