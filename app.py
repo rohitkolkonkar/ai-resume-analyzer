@@ -18,7 +18,7 @@ load_dotenv()
 
 # ── App Config ──────────────────────────────────────────────────────────────
 static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-app = Flask(__name__, static_folder=static_dir, static_url_path="")
+app = Flask(__name__, static_folder=static_dir)
 CORS(app)
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
@@ -157,6 +157,12 @@ def parse_json_response(text: str):
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, "index.html")
+
+
+@app.route("/<path:filename>")
+def serve_static(filename):
+    # Serve files from the static folder (like styles.css, app.js)
+    return send_from_directory(app.static_folder, filename)
 
 
 @app.route("/api/analyze", methods=["POST"])
